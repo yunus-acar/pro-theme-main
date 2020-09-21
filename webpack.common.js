@@ -4,7 +4,10 @@ const path = require('path');
 module.exports = {
     entry: {
         'theme':'./app/theme',
-        'site-theme':'./app/components/site-theme.vue'
+        'theme-configure':'./app/views/theme-configure',
+
+        // Nodes Components
+        'node/node-positions':'./app/components/node/node-positions.vue'
     },
     output: {
         path: path.resolve(__dirname, './app/bundle'),

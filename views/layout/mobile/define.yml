@@ -1,0 +1,13 @@
+styles:
+  -
+    name: "Style 1"
+    icon: "theme:assets/defined/mobile/mobile-style1.svg"
+    path: "layout/mobile/style_1.php"
+  -
+    name: "Style 2"
+    icon: "theme:assets/defined/mobile/mobile-style2.svg"
+    path: "layout/mobile/style_2.php"
+  -
+    name: "Style 3"
+    icon: "theme:assets/defined/mobile/mobile-style3.svg"
+    path: "layout/mobile/style_3.php"

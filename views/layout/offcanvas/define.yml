@@ -1,0 +1,17 @@
+styles:
+  -
+    name: "Style 1"
+    icon: "theme:assets/defined/offcanvas/offcanvas-style1.svg"
+    path: "layout/offcanvas/style_1.php"
+  -
+    name: "Style 2"
+    icon: "theme:assets/defined/offcanvas/offcanvas-style2.svg"
+    path: "layout/offcanvas/style_2.php"
+  -
+    name: "Style 3"
+    icon: "theme:assets/defined/offcanvas/offcanvas-style3.svg"
+    path: "layout/offcanvas/style_3.php"
+  -
+    name: "Style 4"
+    icon: "theme:assets/defined/offcanvas/offcanvas-style4.svg"
+    path: "layout/offcanvas/style_4.php"

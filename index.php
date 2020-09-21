@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\Yaml\Yaml;
-
 $packageName = 'pro-theme-main';
 
 return [
@@ -12,29 +10,85 @@ return [
         'second' => 'Second',
     ],
 
-    'positions' => [
-        'header-left' => 'Header Left',
-        'header->right' => 'Header Right',
+    'autoload' => [
+        'GreenCheap\\ProTheme\\' => 'src'
     ],
 
-    'config' => [
-        'navbar' => [
-            'style' => 'layout/navbar/style_1.php',
-            'components' => ['delay-show' => 0, 'delay-hide' => 100, 'boundary' => 'window', 'boundary-align' => false, 'offset' => 0, 'dropbar' => false, 'dropbar-mode' => 'slide', 'duration' => 200]
+    'menu' => [
+        'site: theme' => [
+            'label' => 'Theme',
+            'parent' => 'site',
+            'url' => '@site/theme',
+            'access' => 'system: access settings',
+            'priority' => 20
         ]
     ],
 
+    'positions' => [
+        'header-left' => 'Header Left',
+        'header-right' => 'Header Right',
+        'top-a' => 'Top A',
+        'top-b' => 'Top B',
+        'top-c' => 'Top C',
+        'top-d' => 'Top D',
+        'sidebar-right' => 'Sidebar Right',
+        'sidebar-left' => 'Sidebar Left',
+        'content-top' => 'Content Top',
+        'content-bottom' => 'Content Bottom',
+        'bottom-a' => 'Bottom A',
+        'bottom-b' => 'Bottom B',
+        'bottom-c' => 'Bottom C',
+        'bottom-d' => 'Bottom D',
+        'footer-left'   => 'Footer Left',
+        'footer-center' => 'Footer Center',
+        'footer-right'  => 'Footer Right',
+    ],
+
+    'config' => [
+        'general' => [
+            'logo' => [
+                'logo_contrast' => '',
+                'mobile_logo' => '',
+                'mobile_contrast' => ''
+            ],
+            'navbar_button' => [
+                'active' => false,
+                'title' => '',
+                'url' => '',
+            ],
+            'social_access' => [
+                'navbar' => true,
+                'footer' => false
+            ],
+            'socials' => [
+                ['icon' => 'twitter','url' => 'https://twitter.com/greencheapnet'],
+                ['icon' => 'github','url' => 'https://github.com/greencheap/greencheap'],
+                ['icon' => 'greencheap','url' => 'https://greencheap.net']
+            ]
+        ],
+        'navbar' => [
+            'style' => 'layout/navbar/style_1.php',
+            'components' => ['delay-show' => 0, 'delay-hide' => 100, 'boundary' => 'window', 'boundary-align' => false, 'offset' => 0, 'dropbar' => false, 'dropbar-mode' => 'slide', 'duration' => 200]
+        ],
+        'mobile' => [
+            'style' => 'layout/mobile/style_1.php',
+        ],
+        'offcanvas' => [
+            'style' => 'layout/offcanvas/style_1.php',
+        ]
+    ],
+
+    'routes' => [
+        '/' => [
+            'name' => '@site',
+            'controller' => 'GreenCheap\\ProTheme\\Controller\\ThemeController'
+        ],
+    ],
+
     'events' => [
-        'view.system/site/admin/settings' => function ($event, $view){
-            $navbar = Yaml::parseFile($this->get('path').'/views/layout/navbar/define.yml');
-            $view->script('site-theme', 'theme:app/bundle/site-theme.js', 'site-settings');
-            $view->data('$theme', [
-                'name' => $this->get('name'),
-                'options' => [
-                    'navbar' => $navbar,
-                ],
-                'config' => $this->get('config')
-            ]);
+        'view.system/site/admin/edit' => function($event, $view) use ($app){
+            $view->script('node-positions', 'theme:app/bundle/node/node-positions.js', 'site-edit');
+            $view->data('$node_positions', $this->get('positions'));
         },
 
         'view.layout' => function($event , $view) use ($app){

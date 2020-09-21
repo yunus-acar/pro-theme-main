@@ -11,7 +11,3 @@ styles:
     name: "Style 3"
     icon: "theme:assets/defined/navbar/navbar-style3.svg"
     path: "layout/navbar/style_3.php"
-  -
-    name: "Style 4"
-    icon: "theme:assets/defined/navbar/navbar-style4.svg"
-    path: "layout/navbar/style_4.php"
