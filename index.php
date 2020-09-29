@@ -25,23 +25,22 @@ return [
     ],
 
     'positions' => [
-        'header-left' => 'Header Left',
-        'header-right' => 'Header Right',
-        'top-a' => 'Top A',
-        'top-b' => 'Top B',
-        'top-c' => 'Top C',
-        'top-d' => 'Top D',
-        'sidebar-right' => 'Sidebar Right',
-        'sidebar-left' => 'Sidebar Left',
-        'content-top' => 'Content Top',
-        'content-bottom' => 'Content Bottom',
-        'bottom-a' => 'Bottom A',
-        'bottom-b' => 'Bottom B',
-        'bottom-c' => 'Bottom C',
-        'bottom-d' => 'Bottom D',
-        'footer-left'   => 'Footer Left',
-        'footer-center' => 'Footer Center',
-        'footer-right'  => 'Footer Right',
+        'headerleft' => 'Header Left',
+        'headerright' => 'Header Right',
+        'topa' => 'Top A',
+        'topb' => 'Top B',
+        'topc' => 'Top C',
+        'topd' => 'Top D',
+        'sidebarright' => 'Sidebar Right',
+        'sidebarleft' => 'Sidebar Left',
+        'contenttop' => 'Content Top',
+        'contentbottom' => 'Content Bottom',
+        'bottoma' => 'Bottom A',
+        'bottomb' => 'Bottom B',
+        'bottomc' => 'Bottom C',
+        'bottomd' => 'Bottom D',
+        'footera'  => 'Footer A',
+        'footerb'  => 'Footer B',
     ],
 
     'config' => [
@@ -88,6 +87,7 @@ return [
     'events' => [
         'view.system/site/admin/edit' => function($event, $view) use ($app){
             $view->script('node-positions', 'theme:app/bundle/node/node-positions.js', 'site-edit');
+            $view->script('node-fixedPositions', 'theme:app/bundle/node/node-fixedPositions.js', 'site-edit');
             $view->data('$node_positions', $this->get('positions'));
         },
 
