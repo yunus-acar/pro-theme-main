@@ -111,7 +111,7 @@
                         <div class="uk-margin">
                             <label class="uk-form-label">{{ 'DOM' | trans }}</label>
                             <div class="uk-form-controls">
-                                <v-editor v-model="theme.grid_config.dom" :options="{height:100}" type="code"/>
+                                <textarea v-model="theme.grid_config.dom" class="uk-height-small uk-textarea uk-width-expand" style="resize:none"></textarea>
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                         <div class="uk-margin">
                             <label class="uk-form-label">{{ 'DOM' | trans }}</label>
                             <div class="uk-form-controls">
-                                <v-editor v-model="theme.section.dom" :options="{height:100}" type="code"/>
+                                <textarea v-model="theme.section.dom" class="uk-height-small uk-textarea uk-width-expand" style="resize:none"></textarea>
                             </div>
                         </div>
                     </div>
@@ -198,7 +198,7 @@
                         <div class="uk-margin">
                             <label class="uk-form-label">{{ 'DOM' | trans }}</label>
                             <div class="uk-form-controls">
-                                <v-editor v-model="theme.container.dom" :options="{height:100}" type="code"/>
+                                <textarea v-model="theme.container.dom" class="uk-height-small uk-textarea uk-width-expand" style="resize:none"></textarea>
                             </div>
                         </div>
                     </div>
@@ -261,34 +261,15 @@ const nodePositions = {
 
     mixins: [Define],
 
-    data(){
-        return {
-            positions: window.$node_positions,
-            themeOptions: []
-        }
-    },
-
     watch:{
-        'themeOptions':{
-            handler(val){
-                this.node.theme = val
-            },  
-            deep:true
+        'node.theme':{
+            handler(th){
+                if(th.positions){
+                    this.initPositions()
+                }
+            },
+            immediate:true
         }
-    },
-
-    created(){
-        this.$set(this, 'themeOptions' , this.node.theme)
-    },
-
-    mounted(){
-        if(!this.themeOptions['positions']){
-            this.$set(this, 'themeOptions' , _.merge({
-                positions: [],
-                fixed_positions: []
-            }, this.themeOptions))
-        }
-        this.initPositions()
     },
 
     methods:{
@@ -309,8 +290,8 @@ const nodePositions = {
             this.themeOptions.positions = _.merge(data , this.themeOptions.positions)
         },
 
-        getPositionName(name){
-            return this.positions[name];
+        useGrid(id){
+            this.themeOptions.positions[id].stacked = false
         },
 
         draftOfPosition(){
@@ -363,10 +344,6 @@ const nodePositions = {
                     dom:''
                 }
             }
-        },
-
-        useGrid(id){
-            this.themeOptions.positions[id].stacked = false
         }
     }
 }

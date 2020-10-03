@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
+
 $packageName = 'pro-theme-main';
 
 return [
@@ -77,6 +79,10 @@ return [
         ]
     ],
 
+    'node' => [
+        
+    ],
+
     'routes' => [
         '/' => [
             'name' => '@site',
@@ -86,8 +92,7 @@ return [
 
     'events' => [
         'view.system/site/admin/edit' => function($event, $view) use ($app){
-            $view->script('node-positions', 'theme:app/bundle/node/node-positions.js', 'site-edit');
-            $view->script('node-fixedPositions', 'theme:app/bundle/node/node-fixedPositions.js', 'site-edit');
+            $view->script('node-positions', 'theme:app/bundle/node/node-positions.js', ['site-edit']);
             $view->data('$node_positions', $this->get('positions'));
         },
 

@@ -8,7 +8,6 @@ module.exports = {
 
         // Nodes Components
         'node/node-positions':'./app/components/node/node-positions.vue',
-        'node/node-fixedPositions':'./app/components/node/node-fixedPositions.vue',
     },
     output: {
         path: path.resolve(__dirname, './app/bundle'),

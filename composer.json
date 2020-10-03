@@ -16,10 +16,10 @@
     "extra": {
         "image": "image.jpg"
     },
+    "require":{
+        "symfony/yaml": "~5.1.6"
+    },
     "archive": {
         "exclude": ["node_modules", "!/app"]
-    },
-    "require":{
-        "symfony/yaml": "^5.2@dev"
     }
 }
