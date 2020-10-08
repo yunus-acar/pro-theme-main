@@ -8,6 +8,10 @@ module.exports = {
 
         // Nodes Components
         'node/node-positions':'./app/components/node/node-positions.vue',
+        'node/node-theme':'./app/components/node/node-theme.vue',
+
+        // Widgets Components
+        'widgets/widget-theme':'./app/components/widgets/widget-theme.vue'
     },
     output: {
         path: path.resolve(__dirname, './app/bundle'),

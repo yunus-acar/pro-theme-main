@@ -4,6 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _computed = _interopRequireDefault(require("./computed"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 var _default = {
   data: function data() {
     return {
@@ -11,26 +16,13 @@ var _default = {
       themeOptions: []
     };
   },
+  mixins: [_computed["default"]],
   watch: {
     'themeOptions': {
       handler: function handler(val) {
         this.node.theme = val;
       },
       deep: true
-    }
-  },
-  computed: {
-    getBlends: function getBlends() {
-      return {
-        '': 'Default',
-        'uk-background-blend-multipy': 'Multipy'
-      };
-    },
-    getPositions: function getPositions() {
-      return {
-        '': 'Default',
-        'uk-background-top-left': 'Top Left'
-      };
     }
   },
   created: function created() {

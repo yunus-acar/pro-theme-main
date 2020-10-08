@@ -1,3 +1,4 @@
+import Computed from './computed';
 export default {
     data(){
         return {
@@ -6,28 +7,14 @@ export default {
         }
     },
 
+    mixins: [Computed],
+
     watch:{
         'themeOptions':{
             handler(val){
                 this.node.theme = val
             },  
             deep:true
-        }
-    },
-
-    computed:{
-        getBlends(){
-            return {
-                '':'Default',
-                'uk-background-blend-multipy':'Multipy'
-            }
-        },
-
-        getPositions(){
-            return {
-                '':'Default',
-                'uk-background-top-left':'Top Left'
-            }
         }
     },
 

@@ -1,11 +1,67 @@
 <?php
 
-use Symfony\Component\Yaml\Yaml;
+use GreenCheap\ProTheme\ThemeHelper;
 
 $packageName = 'pro-theme-main';
 
+$generalThemeOptions = [
+    'section' => [
+        'section' => 'uk-section',
+        'size' => '',
+        'id' =>  '',
+        'class' =>  '',
+        'dom' => ''
+    ],
+    'background' => [
+        'image' => [
+            'src' =>  '',
+            'alt' =>  ''
+        ],
+        'size' => 'uk-background-cover',
+        'position' => '',
+        'repeat' => false,
+        'fixed' => false,
+        'blend' => ''
+    ],
+    'container' => [
+        'container' => 'uk-container',
+        'id' =>  '',
+        'class' =>  '',
+        'dom' => ''
+    ]
+];
+
+$generalPositionsOptions = [
+    'visible' => [
+        'large' => true,
+        'desktop' => true,
+        'tablet' => true,
+        'mobile' => true
+    ],
+    'stacked' => false,
+    'grids' => [
+        '@xl' => 'uk-child-width-1-4',
+        '@l' => 'uk-child-width-1-3',
+        '@m' => 'uk-child-width-1-2',
+        '@s' => 'uk-child-width-1-1'
+    ],
+    'grid_config' => [
+        'gap' => '',
+        'divider' => false,
+        'match' => false,
+        'masonry' => false,
+        'parallax' => 150,
+        'id' =>  '',
+        'class' =>  '',
+        'dom' => ''
+    ],
+];
+
 return [
     'name' => $packageName,
+
+    'main' => function ($app) {
+    },
 
     'menus' => [
         'main' => 'Main',
@@ -34,15 +90,13 @@ return [
         'topc' => 'Top C',
         'topd' => 'Top D',
         'sidebarright' => 'Sidebar Right',
-        'sidebarleft' => 'Sidebar Left',
         'contenttop' => 'Content Top',
         'contentbottom' => 'Content Bottom',
         'bottoma' => 'Bottom A',
         'bottomb' => 'Bottom B',
         'bottomc' => 'Bottom C',
         'bottomd' => 'Bottom D',
-        'footera'  => 'Footer A',
-        'footerb'  => 'Footer B',
+        'footer'  => 'Footer',
     ],
 
     'config' => [
@@ -62,9 +116,9 @@ return [
                 'footer' => false
             ],
             'socials' => [
-                ['icon' => 'twitter','url' => 'https://twitter.com/greencheapnet'],
-                ['icon' => 'github','url' => 'https://github.com/greencheap/greencheap'],
-                ['icon' => 'greencheap','url' => 'https://greencheap.net']
+                ['icon' => 'twitter', 'url' => 'https://twitter.com/greencheapnet'],
+                ['icon' => 'github', 'url' => 'https://github.com/greencheap/greencheap'],
+                ['icon' => 'greencheap', 'url' => 'https://greencheap.net']
             ]
         ],
         'navbar' => [
@@ -79,8 +133,37 @@ return [
         ]
     ],
 
-    'node' => [
-        
+    'node' => array_merge($generalThemeOptions, [
+        'layers' => [
+            'top' => $generalThemeOptions,
+            'bottom' => $generalThemeOptions,
+            'main' => $generalThemeOptions,
+            'footer' => $generalThemeOptions,
+        ],
+    ]),
+
+    'widget' => [
+        'card' => [
+            'card' => 'uk-card',
+            'size' => 'uk-card-body',
+            'hover' => false,
+            'id' => '',
+            'class' => '',
+            'dom' => ''
+        ],
+        'title_hide' => true,
+        'alias_title' => '',
+        'background' => [
+            'image' => [
+                'src' =>  '',
+                'alt' =>  ''
+            ],
+            'size' => 'uk-background-cover',
+            'position' => '',
+            'repeat' => false,
+            'fixed' => false,
+            'blend' => ''
+        ],
     ],
 
     'routes' => [
@@ -91,34 +174,43 @@ return [
     ],
 
     'events' => [
-        'view.system/site/admin/edit' => function($event, $view) use ($app){
+        'view.system/site/admin/edit' => function ($event, $view) use ($app, $generalThemeOptions, $generalPositionsOptions) {
             $view->script('node-positions', 'theme:app/bundle/node/node-positions.js', ['site-edit']);
+            $view->script('node-theme', 'theme:app/bundle/node/node-theme.js', ['site-edit']);
             $view->data('$node_positions', $this->get('positions'));
+            $view->data('$general_theme_node_options', $generalThemeOptions);
+            $view->data('$general_theme_positions_options', array_merge($generalPositionsOptions, $generalThemeOptions));
         },
 
-        'view.layout' => function($event , $view) use ($app){
-            if($app->isAdmin()){
+        'view.system/widget/edit' => function ($event, $view) {
+            $view->script('widget-theme', 'theme:app/bundle/widgets/widget-theme.js', ['widget-edit']);
+        },
+
+        'view.layout' => function ($event, $view) use ($app, $generalPositionsOptions, $generalThemeOptions) {
+            if ($app->isAdmin()) {
                 return;
             }
-                 
+
             $params = $view->params;
-            $params['my_custom_conf'] = 'GreenCheap';
+            $params['protheme'] = new ThemeHelper($this);
+            $params['default_theme_option'] = $generalThemeOptions;
+            $params['default_positions_option'] = $generalPositionsOptions;
 
             /**
              * uk-navbar="components" ayırıcı
              */
             $params['theme-navbar-components'] = '';
-            foreach($params->get('navbar.components') as $key => $value){
+            foreach ($params->get('navbar.components') as $key => $value) {
                 $data = '';
-                $data = $data."'$key':";
-                if(is_string($value)){
-                    $data = $data."'$value';";
-                }else if(is_bool($value)){
-                    $data = $data.$value ? true:false;
-                }else{
-                    $data = $data."$value;";  
+                $data = $data . "'$key':";
+                if (is_string($value)) {
+                    $data = $data . "'$value';";
+                } else if (is_bool($value)) {
+                    $data = $data . $value ? true : false;
+                } else {
+                    $data = $data . "$value;";
                 }
-                $params['theme-navbar-components'] = $params['theme-navbar-components'].$data;
+                $params['theme-navbar-components'] = $params['theme-navbar-components'] . $data;
             };
             /**
              * uk-navbar="components" ayırıcı bitiş

@@ -2,7 +2,7 @@
     <div>
         <div v-for="(theme , id) in themeOptions.positions" :key="id">
             <h3 class="uk-h1 uk-heading-line uk-margin-large-top uk-margin-large-bottom"><span>{{getPositionName(id)}}</span></h3>
-            <div class="uk-child-width-1-4@xl uk-child-width-1-3@m" uk-grid="masonry:true;parallax: 500">
+            <div class="uk-child-width-1-4@xl uk-child-width-1-3@m" uk-grid="masonry:true">
                 <div>
                     <div class="uk-card uk-card-default uk-card-body uk-card-small">
                         <div class="uk-margin">
@@ -141,7 +141,7 @@
                                     <option value="uk-section-small">{{ 'Small' | trans }}</option>
                                     <option value="uk-section-large">{{ 'Large' | trans }}</option>
                                     <option value="uk-section-xlarge">{{ 'xLarge' | trans }}</option>
-                                    <option value="uk-padding-remove">{{ 'Remove' | trans }}</option>
+                                    <option value="uk-padding-remove">{{ 'Not Size' | trans }}</option>
                                 </select>
                             </div>
                         </div>
@@ -180,6 +180,7 @@
                                     <option value="uk-container uk-container-large">{{ 'Large' | trans }}</option>
                                     <option value="uk-container uk-container-xlarge">{{ 'xLarge' | trans }}</option>
                                     <option value="uk-container uk-container-expand">{{ 'Expand' | trans }}</option>
+                                    <option value="">{{ 'Not Container' | trans }}</option>
                                 </select>
                             </div>
                         </div>
@@ -295,55 +296,7 @@ const nodePositions = {
         },
 
         draftOfPosition(){
-            return {
-                visible:{
-                    large:true,
-                    desktop:true,
-                    tablet:true,
-                    mobile:true
-                },
-                stacked:false,
-                grids:{
-                    '@xl':'uk-child-width-1-4',
-                    '@l':'uk-child-width-1-3',
-                    '@m':'uk-child-width-1-2',
-                    '@s':'uk-child-width-1-1'
-                },
-                grid_config:{
-                    gap:'',
-                    divider:false,
-                    match:false,
-                    masonry:false,
-                    parallax:150,
-                    id: '',
-                    class: '',
-                    dom:''
-                },
-                section:{
-                    section:'uk-section',
-                    size:'',
-                    id: '',
-                    class: '',
-                    dom:''
-                },
-                background:{
-                    image:{
-                        src: '',
-                        alt: ''
-                    },
-                    size:'uk-background-cover',
-                    position:'',
-                    repeat:false,
-                    fixed:false,
-                    blend:''
-                },
-                container:{
-                    container:'uk-container',
-                    id: '',
-                    class: '',
-                    dom:''
-                }
-            }
+            return window.$general_theme_positions_options
         }
     }
 }
